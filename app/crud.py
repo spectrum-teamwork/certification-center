@@ -6,16 +6,24 @@ from app import models as m
 from app import schemas as s
 
 
+async def read_title_info(db: AsyncSession):
+    stmt = await db.execute(select(m.TitleInfo))
+    return stmt.scalar_one_or_none()
+
+
+async def read_contacts(db: AsyncSession):
+    stmt = await db.execute(select(m.Contact))
+    return stmt.scalars().all()
+
+
 async def read_services(db: AsyncSession):
-    stmt = select(m.Service)
-    result = await db.execute(stmt)
-    return result.scalars().all()
+    stmt = await db.execute(select(m.Service))
+    return stmt.scalars().all()
 
 
 async def read_clients(db: AsyncSession):
-    stmt = select(m.Client)
-    result = await db.execute(stmt)
-    return result.scalars().all()
+    stmt = await db.execute(select(m.Client))
+    return stmt.scalars().all()
 
 
 async def read_accreditation_info(db: AsyncSession):

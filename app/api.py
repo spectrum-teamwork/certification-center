@@ -13,18 +13,22 @@ from app.database import get_db
 router = APIRouter(prefix='/api/v1')
 
 
+@router.get('/main/title', response_model=s.TitleInfoOut, tags=['main'])
+async def get_title_info(db: AsyncSession = Depends(get_db)):
+    """Получить описание на главной странице."""
+    return await crud.read_title_info(db)
+
+
+@router.get('/main/contacts', response_model=list[s.ContactsOut], tags=['main'])
+async def get_contacts(db: AsyncSession = Depends(get_db)):
+    """Получить список контактов."""
+    return await crud.read_contacts(db)
+
+
 @router.get('/services', response_model=list[s.ServiceOut], tags=['services'])
 async def get_all_services(db: AsyncSession = Depends(get_db)):
     """Получить список всех услуг."""
     return await crud.read_services(db)
-
-
-@router.post('/services/service', status_code=201, tags=['services'])
-async def create_service(service: s.ServiceIn, db: AsyncSession = Depends(get_db)):
-    """Создать услугу."""
-    stmt = m.Service(**service.dict())
-    db.add(stmt)
-    await db.commit()
 
 
 @router.get('/clients', response_model=list[s.ClientOut], tags=['clients'])

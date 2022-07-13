@@ -44,6 +44,25 @@ class CreateUpdateMixin(Base):
 #     is_active = Column(Boolean, default=False, nullable=False)
 
 
+class TitleInfo(IdMixin, CreateUpdateMixin):
+    __tablename__ = 'title_info'
+
+    title = Column(String, nullable=False)
+    text = Column(String, nullable=False)
+    image_id = Column(UUID)
+
+
+class Contact(IdMixin, CreateUpdateMixin):
+    __tablename__ = 'contacts'
+
+    city = Column(String, nullable=False)
+    phone = Column(String, nullable=False)
+    address = Column(String, nullable=False)
+    email = Column(String, nullable=False)
+
+    coordinates = Column(String, nullable=False)  # TODO: Сделать списком
+
+
 class Service(IdMixin, CreateUpdateMixin):
     __tablename__ = 'services'
 
@@ -90,10 +109,6 @@ class News(IdMixin, CreateUpdateMixin):  # Новости
     title = Column(String, nullable=False)
     image_id = Column(UUID)
     text = Column(String)
-    
-
-# class Contact(IdMixin, CreateUpdateMixin):
-#     __tablename__ = 'contacts'
 
 
 # class Order(IdMixin, CreateUpdateMixin):
@@ -108,12 +123,3 @@ class News(IdMixin, CreateUpdateMixin):  # Новости
 #     comment = Column(String)
 
 #     is_consent = Column(Boolean, nullable=False)  # согласие на обработку
-
-
-# Новости:
-#  19. Постер (изображение) главное изображение к статье
-#  20. Заголовок статьи
-#  21. Текст статьи
-#   Так же есть слайдер для списка новостей, должна быть возможность:
-#     1. Получать список статей
-#     2. Каждый элемент списка содержит id новости, Постер, название статьи (новости), краткий текст статьи (начало статьи обрезанное примерно до 14 первых слов)

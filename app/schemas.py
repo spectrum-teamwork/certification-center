@@ -3,6 +3,25 @@ from pydantic import UUID4, BaseModel, validator
 from app.models import ServiceTypes
 
 
+class TitleInfoOut(BaseModel):
+    title: str
+    text: str
+
+    class Config:
+        orm_mode = True
+
+
+class ContactsOut(BaseModel):
+    city: str
+    address: str
+    phone: str
+    email: str
+    coordinates: str
+
+    class Config:
+        orm_mode = True
+
+
 class ServiceIn(BaseModel):
     title: str
     service_type: ServiceTypes
