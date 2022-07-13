@@ -60,3 +60,15 @@ async def upload_file_on_server(image: UploadFile = File(..., media_type='image/
     await db.commit()
     await db.refresh(stmt)
     return {'detail': 'images was added', 'image_id': stmt.id}
+
+
+@router.get('/news', response_model=list[s.NewsOut], tags=['news'])
+async def get_all_news(db: AsyncSession = Depends(get_db)):
+    """Получить список всех новостей."""
+    return await crud.read_all_news(db)
+
+
+@router.get('/news/{news_id}', response_model=s.NewsFullOut, tags=['news'])
+async def get_news_by_id(news_id: UUID4, db: AsyncSession = Depends(get_db)):
+    """Получить список всех новостей."""
+    return await crud.read_news_by_id(news_id, db)

@@ -33,3 +33,13 @@ async def read_image(image_id: UUID4, db: AsyncSession):
     stmt = select(m.Image).where(m.Image.id == image_id)
     result = await db.execute(stmt)
     return result.scalar_one()
+
+
+async def read_all_news(db: AsyncSession):
+    stmt = await db.execute(select(m.News))
+    return stmt.scalars().all()
+
+
+async def read_news_by_id(news_id: UUID4, db: AsyncSession):
+    stmt = await db.execute(select(m.News).where(m.News.id == news_id))
+    return stmt.scalar_one()

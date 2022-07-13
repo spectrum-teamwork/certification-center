@@ -84,9 +84,13 @@ class Certificate(IdMixin, CreateUpdateMixin):  # Аттестаты и аккр
     image_id = Column(UUID)  # Изображение 350х275
 
 
-# class News(IdMixin, CreateUpdateMixin):  # Новости
-#     __tablename__ = 'news'
+class News(IdMixin, CreateUpdateMixin):  # Новости
+    __tablename__ = 'news'
 
+    title = Column(String, nullable=False)
+    image_id = Column(UUID)
+    text = Column(String)
+    
 
 # class Contact(IdMixin, CreateUpdateMixin):
 #     __tablename__ = 'contacts'

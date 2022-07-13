@@ -44,3 +44,18 @@ class AccreditationInfoOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class NewsFullOut(BaseModel):
+    title: str
+    text: str
+    image_id: UUID4 | None
+
+    class Config:
+        orm_mode = True
+
+
+class NewsOut(NewsFullOut):
+    @validator('text', pre=True)
+    def dump_text(cls, v: str):
+        return ' '.join(v.split(' ')[:14]) + ' ...'
