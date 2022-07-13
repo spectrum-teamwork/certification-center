@@ -78,3 +78,17 @@ class NewsOut(NewsFullOut):
     @validator('text', pre=True)
     def dump_text(cls, v: str):
         return ' '.join(v.split(' ')[:14]) + ' ...'
+
+
+class OrderIn(BaseModel):
+    service_id: UUID4 | None
+    region: str | None
+    contact_name: str | None
+    phone: str | None
+    email: str | None
+    comment: str | None
+
+class OrderOut(OrderIn):
+    id: UUID4
+    class Config:
+        orm_mode = True

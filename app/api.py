@@ -1,6 +1,5 @@
-from re import L
-from sqlalchemy import select, update
-from fastapi import APIRouter, Depends, File, Form, UploadFile
+from sqlalchemy import select
+from fastapi import APIRouter, Depends, File, UploadFile
 from fastapi.responses import Response
 from pydantic import UUID4
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -76,3 +75,19 @@ async def get_all_news(db: AsyncSession = Depends(get_db)):
 async def get_news_by_id(news_id: UUID4, db: AsyncSession = Depends(get_db)):
     """Получить список всех новостей."""
     return await crud.read_news_by_id(news_id, db)
+
+
+@router.get('/orders', response_model=list[s.OrderOut], response_model_exclude_none=True)
+async def get_all_orders(db: AsyncSession = Depends(get_db)):
+    """ВРЕМЕННО!"""
+    stmt = await db.execute(select(m.Order))
+    return stmt.scalars().all()
+
+
+@router.post('/orders/order', status_code=202, tags=['orders'])
+async def create_order(order: s.OrderIn, db: AsyncSession = Depends(get_db)):
+    """Создать заявку..."""
+    stmt = await crud.create_order(order, db)
+    await db.commit()
+    await db.refresh(stmt)
+    return {'detail': 'order was created', 'order_id': stmt.id}

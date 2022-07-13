@@ -49,7 +49,7 @@ class TitleInfo(IdMixin, CreateUpdateMixin):
 
     title = Column(String, nullable=False)
     text = Column(String, nullable=False)
-    image_id = Column(UUID)
+    image_id = Column(UUID(as_uuid=True))
 
 
 class Contact(IdMixin, CreateUpdateMixin):
@@ -68,9 +68,9 @@ class Service(IdMixin, CreateUpdateMixin):
 
     title = Column(String, nullable=False)  # Название
     service_type = Column(Enum(ServiceTypes), nullable=False)  # Тип (Испытание или Сертификация)
-    image_id = Column(UUID)  # Изображение для слайдера
+    image_id = Column(UUID(as_uuid=True))  # Изображение для слайдера
     description = Column(String, nullable=False)  # Текст с описанием услуги (по сути текст статьи про услугу)
-    image_document_id = Column(UUID)  # Пример выдаваемого документа (картинка)
+    image_document_id = Column(UUID(as_uuid=True))  # Пример выдаваемого документа (картинка)
     requirements = Column(String, nullable=False)  # Список требований для проведения испытаний (текст?) Возможно стоит сделать JSON list
     price = Column(Float, nullable=False)  # Стоимость работ - для всех регионов стоимость одинаковая (число)
 
@@ -79,7 +79,7 @@ class Client(IdMixin, CreateUpdateMixin):  # Клиенты
     __tablename__ = 'clients'
 
     title = Column(String)  # Название (текст)
-    image_id = Column(UUID)  # Изображение PNG - 167х133
+    image_id = Column(UUID(as_uuid=True))  # Изображение PNG - 167х133
 
 
 class Image(IdMixin, CreateUpdateMixin):
@@ -100,26 +100,24 @@ class Certificate(IdMixin, CreateUpdateMixin):  # Аттестаты и аккр
     __tablename__ = 'certificates'
 
     label = Column(String, nullable=False)  # Подпись к изображению
-    image_id = Column(UUID)  # Изображение 350х275
+    image_id = Column(UUID(as_uuid=True))  # Изображение 350х275
 
 
 class News(IdMixin, CreateUpdateMixin):  # Новости
     __tablename__ = 'news'
 
     title = Column(String, nullable=False)
-    image_id = Column(UUID)
+    image_id = Column(UUID(as_uuid=True))
     text = Column(String)
 
 
-# class Order(IdMixin, CreateUpdateMixin):
-#     __tablename__ = 'orders'
+class Order(IdMixin, CreateUpdateMixin):
+    __tablename__ = 'orders'
 
-#     service_id = Column(UUID)
-#     region = Column(String)
+    service_id = Column(UUID(as_uuid=True))
+    region = Column(String)
 
-#     contact_name = Column(String)
-#     phone = Column(String)
-#     email = Column(String)
-#     comment = Column(String)
-
-#     is_consent = Column(Boolean, nullable=False)  # согласие на обработку
+    contact_name = Column(String)
+    phone = Column(String)
+    email = Column(String)
+    comment = Column(String)
