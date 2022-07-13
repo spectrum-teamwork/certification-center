@@ -1,6 +1,7 @@
 import enum
 from datetime import datetime
 from uuid import uuid4
+from pydantic import UUID4
 
 from sqlalchemy import TIMESTAMP, Boolean, Column, Enum, Float, String, func, LargeBinary
 from sqlalchemy.dialects.postgresql import UUID
@@ -42,7 +43,7 @@ class CreateUpdateMixin(Base):
 
 #     is_active = Column(Boolean, default=False, nullable=False)
 
-    
+
 class Service(IdMixin, CreateUpdateMixin):
     __tablename__ = 'services'
 
@@ -69,18 +70,18 @@ class Image(IdMixin, CreateUpdateMixin):
     data = Column(LargeBinary, nullable=False)
 
 
-# class Accreditation(IdMixin):
-#     __tablename__ = 'accreditations'
+class AccreditationInfo(IdMixin):
+    __tablename__ = 'accreditation_info'
 
-#     title = Column(String, nullable=False)  # Заголовок блок
-#     text = Column(String, nullable=False)  # Текст блокаа
+    title = Column(String, nullable=False)  # Заголовок блок
+    text = Column(String, nullable=False)  # Текст блокаа
 
 
-# class Certificate(IdMixin, CreateUpdateMixin):  # Аттестаты и аккредитация
-#     __tablename__ = 'certificates'
+class Certificate(IdMixin, CreateUpdateMixin):  # Аттестаты и аккредитация
+    __tablename__ = 'certificates'
 
-#     image = Column(String)  # Изображение 350х275
-#     label = Column(String, nullable=False)  # Подпись к изображению
+    label = Column(String, nullable=False)  # Подпись к изображению
+    image_id = Column(UUID)  # Изображение 350х275
 
 
 # class News(IdMixin, CreateUpdateMixin):  # Новости

@@ -33,6 +33,18 @@ async def get_all_clients(db: AsyncSession = Depends(get_db)):
     return await crud.read_clients(db)
 
 
+@router.get('/accreditation/info', response_model=s.AccreditationInfoOut, tags=['accreditation'])
+async def get_accreditation_info(db: AsyncSession = Depends(get_db)):
+    """Получить описание аккредитаций."""
+    return await crud.read_accreditation_info(db)
+
+
+@router.get('/accreditation/certeficates', response_model=list[s.CertsOut], tags=['accreditation'])
+async def get_accreditation_certeficates(db: AsyncSession = Depends(get_db)):
+    """Получить описание аккредитаций."""
+    return await crud.read_certificates(db)
+
+
 @router.get('/images/{image_id}', tags=['images'])
 async def get_image(image_id: UUID4, db: AsyncSession = Depends(get_db)):
     """Получить изображение."""

@@ -27,3 +27,20 @@ class ClientIn(BaseModel):
 
 class ClientOut(ClientIn):
     id: UUID4
+
+
+class CertsOut(BaseModel):
+    id: UUID4
+    label: str
+    image_id: UUID4 | None
+
+    class Config:
+        orm_mode = True
+
+
+class AccreditationInfoOut(BaseModel):
+    title: str
+    text: str
+
+    class Config:
+        orm_mode = True
