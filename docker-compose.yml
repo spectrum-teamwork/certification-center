@@ -14,7 +14,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: bash -c "gunicorn app.main:app --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker"
+    command: bash -c "alembic upgrade head && gunicorn app.main:app --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker"
     ports:
       - 8000:8000
     env_file:
