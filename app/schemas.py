@@ -47,6 +47,9 @@ class ClientIn(BaseModel):
 class ClientOut(ClientIn):
     id: UUID4
 
+    class Config:
+        orm_mode = True
+
 
 class CertsOut(BaseModel):
     id: UUID4
@@ -88,7 +91,9 @@ class OrderIn(BaseModel):
     email: str | None
     comment: str | None
 
+
 class OrderOut(OrderIn):
     id: UUID4
+
     class Config:
         orm_mode = True
