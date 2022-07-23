@@ -60,7 +60,7 @@ class Contact(IdMixin, CreateUpdateMixin):
     address = Column(String, nullable=False)
     email = Column(String, nullable=False)
 
-    coordinates = Column(String, nullable=False)  # TODO: Сделать списком
+    place_src = Column(String)
 
 
 class Service(IdMixin, CreateUpdateMixin):
