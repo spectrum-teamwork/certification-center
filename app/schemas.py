@@ -1,5 +1,5 @@
 from base64 import b64encode
-from pydantic import UUID4, BaseModel, validator
+from pydantic import UUID4, BaseModel, EmailStr, validator
 from app.models import ServiceTypes
 
 
@@ -88,7 +88,7 @@ class OrderIn(BaseModel):
     region: str | None
     contact_name: str | None
     phone: str | None
-    email: str | None
+    email: EmailStr | None
     comment: str | None
 
 

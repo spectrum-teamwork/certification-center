@@ -16,9 +16,19 @@ async def read_contacts(db: AsyncSession):
     return stmt.scalars().all()
 
 
+async def read_contact_by_id(contact_id: UUID4, db: AsyncSession):
+    stmt = await db.execute(select(m.Contact).where(m.Contact.id == contact_id))
+    return stmt.scalar_one_or_none()
+
+
 async def read_services(db: AsyncSession):
     stmt = await db.execute(select(m.Service))
     return stmt.scalars().all()
+
+
+async def read_service_by_id(service_id: UUID4, db: AsyncSession):
+    stmt = await db.execute(select(m.Service).where(m.Service.id == service_id))
+    return stmt.scalar_one_or_none()
 
 
 async def read_clients(db: AsyncSession):

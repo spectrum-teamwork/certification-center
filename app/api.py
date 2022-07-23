@@ -1,13 +1,16 @@
-from sqlalchemy import select
-from fastapi import APIRouter, Depends, File, UploadFile
+
+from fastapi import APIRouter, BackgroundTasks, Depends, File, UploadFile
 from fastapi.responses import Response
+from fastapi_mail import FastMail, MessageSchema
 from pydantic import UUID4
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app import crud
 from app import models as m
 from app import schemas as s
 from app.database import get_db
+from app.settings import email_conf
 
 router = APIRouter(prefix='/api/v1')
 
@@ -42,8 +45,8 @@ async def get_accreditation_info(db: AsyncSession = Depends(get_db)):
     return await crud.read_accreditation_info(db)
 
 
-@router.get('/accreditation/certeficates', response_model=list[s.CertsOut], tags=['accreditation'])
-async def get_accreditation_certeficates(db: AsyncSession = Depends(get_db)):
+@router.get('/accreditation/certificates', response_model=list[s.CertsOut], tags=['accreditation'])
+async def get_accreditation_certificates(db: AsyncSession = Depends(get_db)):
     """Получить описание аккредитаций."""
     return await crud.read_certificates(db)
 
@@ -84,10 +87,31 @@ async def get_all_orders(db: AsyncSession = Depends(get_db)):
     return stmt.scalars().all()
 
 
+def make_message(order: s.OrderIn, service_title: str | None) -> str:
+    html = f"""
+    <h2>Создана новая заявка</h2>
+    <p>Контактное лицо: {order.contact_name}</p>
+    <p>Телефон: {order.phone}</p>
+    <p>Электронная почта: {order.email}</p>
+    <p>Комментарий: {order.comment}</p>
+    """
+    return html
+
+
 @router.post('/orders/order', status_code=202, tags=['orders'])
-async def create_order(order: s.OrderIn, db: AsyncSession = Depends(get_db)):
+async def create_order(order: s.OrderIn, background_tasks: BackgroundTasks, db: AsyncSession = Depends(get_db)):
     """Создать заявку..."""
+    # Запись в БД
     stmt = await crud.create_order(order, db)
     await db.commit()
     await db.refresh(stmt)
-    return {'detail': 'order was created', 'order_id': stmt.id}
+    
+    # db_service = await crud.read_service_by_id(order.service_id, db)
+    # db_contact = await crud.read_contact_by_id(order.region, db)
+
+    # Рассылка писем
+    fm = FastMail(email_conf)
+    message = MessageSchema(subject="Новая заявка!", recipients=['yarlistratenko@yandex.ru'], html=make_message(order))
+    background_tasks.add_task(fm.send_message, message)
+
+    return {'message': 'order was created', 'order_id': stmt.id}
