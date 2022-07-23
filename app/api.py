@@ -87,7 +87,7 @@ async def get_all_orders(db: AsyncSession = Depends(get_db)):
     return stmt.scalars().all()
 
 
-def make_message(order: s.OrderIn, service_title: str | None) -> str:
+def make_message(order: s.OrderIn) -> str:
     html = f"""
     <h2>Создана новая заявка</h2>
     <p>Контактное лицо: {order.contact_name}</p>
