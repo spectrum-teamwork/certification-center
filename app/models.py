@@ -3,7 +3,7 @@ from datetime import datetime
 from uuid import uuid4
 from pydantic import UUID4
 
-from sqlalchemy import TIMESTAMP, Boolean, Column, Enum, Float, String, func, LargeBinary
+from sqlalchemy import TIMESTAMP, Boolean, Column, Enum, Float, Integer, String, func, LargeBinary
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base
 from app.database import engine
@@ -122,3 +122,18 @@ class Order(IdMixin, CreateUpdateMixin):
     phone = Column(String)
     email = Column(String)
     comment = Column(String)
+
+
+class EmailConfig(IdMixin):
+    __tablename__ = 'email_config'
+
+    MAIL_USERNAME = Column(String, nullable=False)
+    MAIL_PASSWORD = Column(String, nullable=False)
+    MAIL_FROM = Column(String, nullable=False)
+    MAIL_PORT = Column(Integer, nullable=False, default=587)
+    MAIL_SERVER = Column(String, nullable=False)
+    MAIL_FROM_NAME = Column(String, nullable=False)
+    MAIL_TLS = Column(Boolean, nullable=False, default=False)
+    MAIL_SSL = Column(Boolean, nullable=False, default=False)
+    USE_CREDENTIALS = Column(Boolean, nullable=False, default=False)
+    VALIDATE_CERTS = Column(Boolean, nullable=False, default=False)

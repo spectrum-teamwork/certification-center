@@ -1,5 +1,5 @@
 from fastapi_mail import ConnectionConfig
-from pydantic import BaseSettings, EmailStr
+from pydantic import BaseModel, BaseSettings, EmailStr
 
 
 class Settings(BaseSettings):
@@ -10,7 +10,7 @@ class Settings(BaseSettings):
         env_file = '.env'
 
 
-class EmailSettings(BaseSettings):
+class EmailSettings(BaseModel):
     MAIL_USERNAME: str
     MAIL_PASSWORD: str
     MAIL_FROM: EmailStr
@@ -23,8 +23,8 @@ class EmailSettings(BaseSettings):
     VALIDATE_CERTS: bool
 
     class Config:
-        env_file = '.env'
+        orm_mode = True
 
 
 settings = Settings()
-email_conf = ConnectionConfig(**EmailSettings().dict())
+# email_conf = ConnectionConfig(**EmailSettings().dict())

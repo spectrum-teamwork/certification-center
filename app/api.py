@@ -10,7 +10,7 @@ from app import crud
 from app import models as m
 from app import schemas as s
 from app.database import get_db
-from app.settings import email_conf
+# from app.settings import email_conf
 
 router = APIRouter(prefix='/api/v1')
 
