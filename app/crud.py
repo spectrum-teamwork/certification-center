@@ -67,3 +67,8 @@ async def create_order(order: s.OrderIn, db: AsyncSession):
     stmt = m.Order(**order.dict(exclude_unset=True))
     db.add(stmt)
     return stmt
+
+
+async def read_email_config(db: AsyncSession):
+    stmt = await db.execute(select(m.EmailConfig))
+    return stmt.scalar_one()

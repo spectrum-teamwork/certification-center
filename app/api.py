@@ -1,7 +1,7 @@
 
 from fastapi import APIRouter, BackgroundTasks, Depends, File, UploadFile
 from fastapi.responses import Response
-from fastapi_mail import FastMail, MessageSchema
+from fastapi_mail import ConnectionConfig, FastMail, MessageSchema
 from pydantic import UUID4
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -9,8 +9,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app import crud
 from app import models as m
 from app import schemas as s
-from app.database import get_db
-# from app.settings import email_conf
+from app.database import async_session, get_db
+from app.settings import EmailSettings
 
 router = APIRouter(prefix='/api/v1')
 
@@ -99,13 +99,16 @@ def make_message(order: s.OrderIn) -> str:
 
 
 @router.post('/orders/order', status_code=202, tags=['orders'])
-async def create_order( order: s.OrderIn, background_tasks: BackgroundTasks, db: AsyncSession = Depends(get_db)):
+async def create_order(order: s.OrderIn, background_tasks: BackgroundTasks, db: AsyncSession = Depends(get_db)):
     """Создать заявку..."""
     # Запись в БД
     stmt = await crud.create_order(order, db)
     await db.commit()
     await db.refresh(stmt)
-    
+
+    db_mail_config = await crud.read_email_config(db)
+    email_conf = ConnectionConfig(**EmailSettings.from_orm(db_mail_config).dict())
+
     # db_service = await crud.read_service_by_id(order.service_id, db)
     # db_contact = await crud.read_contact_by_id(order.region, db)
 
