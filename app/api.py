@@ -98,8 +98,8 @@ def make_message(order: s.OrderIn) -> str:
     return html
 
 
-@router.post('/orders/order/{contact_id}', status_code=202, tags=['orders'])
-async def create_order(contact_id: UUID4, order: s.OrderIn, background_tasks: BackgroundTasks, db: AsyncSession = Depends(get_db)):
+@router.post('/orders/order', status_code=202, tags=['orders'])
+async def create_order( order: s.OrderIn, background_tasks: BackgroundTasks, db: AsyncSession = Depends(get_db)):
     """Создать заявку..."""
     # Запись в БД
     stmt = await crud.create_order(order, db)

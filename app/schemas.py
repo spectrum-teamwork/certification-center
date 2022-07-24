@@ -85,6 +85,7 @@ class NewsOut(NewsFullOut):
 
 
 class OrderIn(BaseModel):
+    contact_id: UUID4
     service_id: UUID4 | None
     contact_name: str | None
     phone: str | None
