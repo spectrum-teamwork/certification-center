@@ -12,11 +12,12 @@ class TitleInfoOut(BaseModel):
 
 
 class ContactsOut(BaseModel):
+    region: str
     city: str
     address: str
     phone: str
     email: str
-    coordinates: str
+    place_src: str
 
     class Config:
         orm_mode = True

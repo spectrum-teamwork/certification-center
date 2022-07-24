@@ -55,9 +55,10 @@ class TitleInfo(IdMixin, CreateUpdateMixin):
 class Contact(IdMixin, CreateUpdateMixin):
     __tablename__ = 'contacts'
 
+    region = Column(String, nullable=False)
     city = Column(String, nullable=False)
-    phone = Column(String, nullable=False)
     address = Column(String, nullable=False)
+    phone = Column(String, nullable=False)
     email = Column(String, nullable=False)
 
     place_src = Column(String)
