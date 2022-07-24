@@ -1,4 +1,3 @@
-from turtle import title
 from typing import ClassVar
 
 import wtforms
