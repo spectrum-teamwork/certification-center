@@ -12,6 +12,7 @@ class TitleInfoOut(BaseModel):
 
 
 class ContactsOut(BaseModel):
+    id: str
     region: str
     city: str
     address: str
