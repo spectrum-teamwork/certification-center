@@ -142,6 +142,7 @@ class NewsAdmin(ModelAdmin, model=m.News):
     create_template: ClassVar[str] = 'create.html'
 
     column_list = [m.News.title, m.News.created_at]
+    column_labels = dict(title="Оглавление", text="Текст", image_id="Изображение")
     form_excluded_columns = [m.News.created_at, m.News.updated_at]
     form_overrides = dict(text=wtforms.TextAreaField, image_id=wtforms.FileField)
 
@@ -156,7 +157,9 @@ class ServiceAdmin(ModelAdmin, model=m.Service):
     create_template: ClassVar[str] = 'create.html'
 
     column_list = [m.Service.title, m.Service.service_type, m.Service.price]
-    column_labels = dict(title="Оглавление", service_type="Тип сервиса", price="Стоимость услуги")
+    column_labels = dict(title="Оглавление", service_type="Тип сервиса", price="Стоимость услуги",
+                         description="Описание услуги", requirements="Требования", image_id="Изображение услуги",
+                         image_document_id="Изображение документа")
 
     # Creating
     form_args = dict(title=dict(description="Описание"))
@@ -172,6 +175,7 @@ class ContactAdmin(ModelAdmin, model=m.Contact):
     name_plural: ClassVar[str] = "Контакты"
 
     column_list = [m.Contact.city, m.Contact.address]
+    column_labels = dict(region="Регион", city="Город", address="Адрес", phone="Телефон", email="Электронная почта", place_src="Ссылка на карту")
     form_overrides = dict(email=wtforms.EmailField)
     form_excluded_columns = [m.Contact.created_at, m.Contact.updated_at]
 
@@ -186,6 +190,7 @@ class ClientAdmin(ModelAdmin, model=m.Client):
     create_template: ClassVar[str] = 'create.html'
 
     column_list = [m.Client.title]
+    column_labels = dict(title="Оглавление", image_id="Изображение")
 
     form_overrides = dict(image_id=wtforms.FileField)
     form_excluded_columns = [m.Client.created_at, m.Client.updated_at]
@@ -201,6 +206,7 @@ class CertificateAdmin(ModelAdmin, model=m.Certificate):
     create_template: ClassVar[str] = 'create.html'
 
     column_list = [m.Certificate.label]
+    column_labels = dict(label="Описание", image_id="Изображение")
     form_overrides = dict(image_id=wtforms.FileField)
     form_excluded_columns = [m.Certificate.created_at, m.Certificate.updated_at]
 
@@ -212,6 +218,7 @@ class AccreditationInfoAdmin(ModelAdmin, model=m.AccreditationInfo):
     name_plural: ClassVar[str] = "Аккредитации"
 
     column_list = [m.AccreditationInfo.title]
+    column_labels = dict(title="Заголовок", text="Текст")
     form_overrides = dict(text=wtforms.TextAreaField)
 
     can_create = False
@@ -220,6 +227,8 @@ class AccreditationInfoAdmin(ModelAdmin, model=m.AccreditationInfo):
 
 
 class ImagesAdmin(ModelAdmin, model=m.Image):
+    name: ClassVar[str] = "Картинка"
+    name_plural: ClassVar[str] = "Картинки"
     column_list = [m.Image.id, m.Image.name]
     form_excluded_columns = [m.Contact.created_at, m.Contact.updated_at]
 
