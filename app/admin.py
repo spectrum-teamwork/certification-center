@@ -10,6 +10,66 @@ from app.database import async_session
 
 
 class MyAdmin(Admin):
+    async def create(self, request: Request) -> Response:
+        """Create model endpoint."""
+
+        await self._create(request)
+
+        identity = request.path_params["identity"]
+        model_admin = self._find_model_admin(identity)
+
+        Form = await model_admin.scaffold_form()
+        form = Form(await request.form())
+
+        context = {
+            "request": request,
+            "model_admin": model_admin,
+            "form": form,
+        }
+
+        if request.method == "GET":
+            return self.templates.TemplateResponse(model_admin.create_template, context)
+
+        if not form.validate():
+            return self.templates.TemplateResponse(
+                model_admin.create_template,
+                context,
+                status_code=400,
+            )
+
+        data = form.data
+        if image := form.data.get('image_id'):
+            if image.filename != '':
+                async with async_session() as db:
+                    stmt = m.Image(name=image.filename, data=image.file.read())
+                    db.add(stmt)
+                    await db.commit()
+                    await db.refresh(stmt)
+
+                data['image_id'] = str(stmt.id)
+            else:
+                del data['image_id']
+
+        if image := form.data.get('image_document_id'):
+            if image.filename != '':
+                async with async_session() as db:
+                    stmt = m.Image(name=image.filename, data=image.file.read())
+                    db.add(stmt)
+                    await db.commit()
+                    await db.refresh(stmt)
+
+                data['image_document_id'] = str(stmt.id)
+            else:
+                del data['image_document_id']
+
+        model = model_admin.model(**data)
+        await model_admin.insert_model(model)
+
+        return RedirectResponse(
+            request.url_for("admin:list", identity=identity),
+            status_code=302,
+        )
+
     async def edit(self, request: Request, ) -> Response:
         """Edit model endpoint."""
 
@@ -54,6 +114,18 @@ class MyAdmin(Admin):
                 data['image_id'] = str(stmt.id)
             else:
                 del data['image_id']
+
+        if image := form.data.get('image_document_id'):
+            if image.filename != '':
+                async with async_session() as db:
+                    stmt = m.Image(name=image.filename, data=image.file.read())
+                    db.add(stmt)
+                    await db.commit()
+                    await db.refresh(stmt)
+
+                data['image_document_id'] = str(stmt.id)
+            else:
+                del data['image_document_id']
         await model_admin.update_model(pk=request.path_params["pk"], data=data)
 
         return RedirectResponse(
