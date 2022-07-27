@@ -134,6 +134,23 @@ class MyAdmin(Admin):
         )
 
 
+class TitleAdmin(ModelAdmin, model=m.TitleInfo):
+    name: ClassVar[str] = "Основное описание"
+    name_plural: ClassVar[str] = "Основное описание"
+
+    edit_template: ClassVar[str] = 'edit.html'
+    create_template: ClassVar[str] = 'create.html'
+
+    column_list = [m.AccreditationInfo.title]
+    column_labels = dict(title="Заголовок", text="Текст", image_id="Изображение")
+    form_excluded_columns = [m.News.created_at, m.News.updated_at]
+    form_overrides = dict(text=wtforms.TextAreaField, image_id=wtforms.FileField)
+
+    can_create = False
+    can_delete = False
+    can_export = False
+
+
 class NewsAdmin(ModelAdmin, model=m.News):
     name: ClassVar[str] = "Новость"
     name_plural: ClassVar[str] = "Новости"
@@ -175,7 +192,8 @@ class ContactAdmin(ModelAdmin, model=m.Contact):
     name_plural: ClassVar[str] = "Контакты"
 
     column_list = [m.Contact.city, m.Contact.address]
-    column_labels = dict(region="Регион", city="Город", address="Адрес", phone="Телефон", email="Электронная почта", place_src="Ссылка на карту")
+    column_labels = dict(region="Регион", city="Город", address="Адрес", phone="Телефон",
+                         email="Электронная почта", place_src="Ссылка на карту")
     form_overrides = dict(email=wtforms.EmailField)
     form_excluded_columns = [m.Contact.created_at, m.Contact.updated_at]
 
