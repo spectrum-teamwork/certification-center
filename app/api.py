@@ -87,9 +87,11 @@ async def get_all_orders(db: AsyncSession = Depends(get_db)):
     return stmt.scalars().all()
 
 
-def make_message(order: s.OrderIn) -> str:
+def make_message(order: s.OrderIn, service) -> str:
+    serv_name = service.title if service != None else None
     html = f"""
     <h2>Создана новая заявка</h2>
+    <p>Услуга: {serv_name}</p>
     <p>Контактное лицо: {order.contact_name}</p>
     <p>Телефон: {order.phone}</p>
     <p>Электронная почта: {order.email}</p>
@@ -109,12 +111,12 @@ async def create_order(order: s.OrderIn, background_tasks: BackgroundTasks, db: 
     db_mail_config = await crud.read_email_config(db)
     email_conf = ConnectionConfig(**EmailSettings.from_orm(db_mail_config).dict())
 
-    # db_service = await crud.read_service_by_id(order.service_id, db)
-    # db_contact = await crud.read_contact_by_id(order.region, db)
+    db_service = await crud.read_service_by_id(order.service_id, db)
+    db_contact = await crud.read_contact_by_id(order.contact_id, db)
 
     # Рассылка писем
     fm = FastMail(email_conf)
-    message = MessageSchema(subject="Новая заявка!", recipients=['yarlistratenko@yandex.ru'], html=make_message(order))
+    message = MessageSchema(subject="Новая заявка!", recipients=[db_contact.email], html=make_message(order, db_service))
     background_tasks.add_task(fm.send_message, message)
 
     return {'message': 'order was created', 'order_id': stmt.id}

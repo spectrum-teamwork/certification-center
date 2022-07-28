@@ -10,6 +10,66 @@ from app.database import async_session
 
 
 class MyAdmin(Admin):
+    async def create(self, request: Request) -> Response:
+        """Create model endpoint."""
+
+        await self._create(request)
+
+        identity = request.path_params["identity"]
+        model_admin = self._find_model_admin(identity)
+
+        Form = await model_admin.scaffold_form()
+        form = Form(await request.form())
+
+        context = {
+            "request": request,
+            "model_admin": model_admin,
+            "form": form,
+        }
+
+        if request.method == "GET":
+            return self.templates.TemplateResponse(model_admin.create_template, context)
+
+        if not form.validate():
+            return self.templates.TemplateResponse(
+                model_admin.create_template,
+                context,
+                status_code=400,
+            )
+
+        data = form.data
+        if image := form.data.get('image_id'):
+            if image.filename != '':
+                async with async_session() as db:
+                    stmt = m.Image(name=image.filename, data=image.file.read())
+                    db.add(stmt)
+                    await db.commit()
+                    await db.refresh(stmt)
+
+                data['image_id'] = str(stmt.id)
+            else:
+                del data['image_id']
+
+        if image := form.data.get('image_document_id'):
+            if image.filename != '':
+                async with async_session() as db:
+                    stmt = m.Image(name=image.filename, data=image.file.read())
+                    db.add(stmt)
+                    await db.commit()
+                    await db.refresh(stmt)
+
+                data['image_document_id'] = str(stmt.id)
+            else:
+                del data['image_document_id']
+
+        model = model_admin.model(**data)
+        await model_admin.insert_model(model)
+
+        return RedirectResponse(
+            request.url_for("admin:list", identity=identity),
+            status_code=302,
+        )
+
     async def edit(self, request: Request, ) -> Response:
         """Edit model endpoint."""
 
@@ -54,12 +114,41 @@ class MyAdmin(Admin):
                 data['image_id'] = str(stmt.id)
             else:
                 del data['image_id']
+
+        if image := form.data.get('image_document_id'):
+            if image.filename != '':
+                async with async_session() as db:
+                    stmt = m.Image(name=image.filename, data=image.file.read())
+                    db.add(stmt)
+                    await db.commit()
+                    await db.refresh(stmt)
+
+                data['image_document_id'] = str(stmt.id)
+            else:
+                del data['image_document_id']
         await model_admin.update_model(pk=request.path_params["pk"], data=data)
 
         return RedirectResponse(
             request.url_for("admin:list", identity=identity),
             status_code=302,
         )
+
+
+class TitleAdmin(ModelAdmin, model=m.TitleInfo):
+    name: ClassVar[str] = "Основное описание"
+    name_plural: ClassVar[str] = "Основное описание"
+
+    edit_template: ClassVar[str] = 'edit.html'
+    create_template: ClassVar[str] = 'create.html'
+
+    column_list = [m.AccreditationInfo.title]
+    column_labels = dict(title="Заголовок", text="Текст", image_id="Изображение")
+    form_excluded_columns = [m.News.created_at, m.News.updated_at]
+    form_overrides = dict(text=wtforms.TextAreaField, image_id=wtforms.FileField)
+
+    can_create = False
+    can_delete = False
+    can_export = False
 
 
 class NewsAdmin(ModelAdmin, model=m.News):
@@ -70,6 +159,7 @@ class NewsAdmin(ModelAdmin, model=m.News):
     create_template: ClassVar[str] = 'create.html'
 
     column_list = [m.News.title, m.News.created_at]
+    column_labels = dict(title="Оглавление", text="Текст", image_id="Изображение")
     form_excluded_columns = [m.News.created_at, m.News.updated_at]
     form_overrides = dict(text=wtforms.TextAreaField, image_id=wtforms.FileField)
 
@@ -84,7 +174,9 @@ class ServiceAdmin(ModelAdmin, model=m.Service):
     create_template: ClassVar[str] = 'create.html'
 
     column_list = [m.Service.title, m.Service.service_type, m.Service.price]
-    column_labels = dict(title="Оглавление", service_type="Тип сервиса", price="Стоимость услуги")
+    column_labels = dict(title="Оглавление", service_type="Тип сервиса", price="Стоимость услуги",
+                         description="Описание услуги", requirements="Требования", image_id="Изображение услуги",
+                         image_document_id="Изображение документа")
 
     # Creating
     form_args = dict(title=dict(description="Описание"))
@@ -100,6 +192,8 @@ class ContactAdmin(ModelAdmin, model=m.Contact):
     name_plural: ClassVar[str] = "Контакты"
 
     column_list = [m.Contact.city, m.Contact.address]
+    column_labels = dict(region="Регион", city="Город", address="Адрес", phone="Телефон",
+                         email="Электронная почта", place_src="Ссылка на карту")
     form_overrides = dict(email=wtforms.EmailField)
     form_excluded_columns = [m.Contact.created_at, m.Contact.updated_at]
 
@@ -114,6 +208,7 @@ class ClientAdmin(ModelAdmin, model=m.Client):
     create_template: ClassVar[str] = 'create.html'
 
     column_list = [m.Client.title]
+    column_labels = dict(title="Оглавление", image_id="Изображение")
 
     form_overrides = dict(image_id=wtforms.FileField)
     form_excluded_columns = [m.Client.created_at, m.Client.updated_at]
@@ -129,6 +224,7 @@ class CertificateAdmin(ModelAdmin, model=m.Certificate):
     create_template: ClassVar[str] = 'create.html'
 
     column_list = [m.Certificate.label]
+    column_labels = dict(label="Описание", image_id="Изображение")
     form_overrides = dict(image_id=wtforms.FileField)
     form_excluded_columns = [m.Certificate.created_at, m.Certificate.updated_at]
 
@@ -140,6 +236,7 @@ class AccreditationInfoAdmin(ModelAdmin, model=m.AccreditationInfo):
     name_plural: ClassVar[str] = "Аккредитации"
 
     column_list = [m.AccreditationInfo.title]
+    column_labels = dict(title="Заголовок", text="Текст")
     form_overrides = dict(text=wtforms.TextAreaField)
 
     can_create = False
@@ -148,6 +245,8 @@ class AccreditationInfoAdmin(ModelAdmin, model=m.AccreditationInfo):
 
 
 class ImagesAdmin(ModelAdmin, model=m.Image):
+    name: ClassVar[str] = "Картинка"
+    name_plural: ClassVar[str] = "Картинки"
     column_list = [m.Image.id, m.Image.name]
     form_excluded_columns = [m.Contact.created_at, m.Contact.updated_at]
 

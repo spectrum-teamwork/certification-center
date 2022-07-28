@@ -9,6 +9,7 @@ app = FastAPI() if settings.debug is True else FastAPI(docs_url=None, redoc_url=
 
 
 admin = a.MyAdmin(app, engine)
+admin.register_model(a.TitleAdmin)
 admin.register_model(a.NewsAdmin)
 admin.register_model(a.ServiceAdmin)
 admin.register_model(a.ContactAdmin)

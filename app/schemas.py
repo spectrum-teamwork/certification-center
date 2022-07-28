@@ -8,6 +8,10 @@ class TitleInfoOut(BaseModel):
 
     class Config:
         orm_mode = True
+        
+    @validator('title', 'text', pre=True)
+    def dump_text(cls, v: str):
+        return v.replace('\n', '<br>')
 
 
 class ContactsOut(BaseModel):
@@ -38,6 +42,10 @@ class ServiceOut(ServiceIn):
 
     class Config:
         orm_mode = True
+        
+    @validator('title', 'requirements', 'description', pre=True)
+    def dump_text(cls, v: str):
+        return v.replace('\n', '<br>')
 
 
 class ClientIn(BaseModel):

@@ -116,7 +116,7 @@ class Order(IdMixin, CreateUpdateMixin):
     __tablename__ = 'orders'
 
     service_id = Column(UUID(as_uuid=True))
-    region = Column(String)
+    contact_id = Column(UUID(as_uuid=True))
 
     contact_name = Column(String)
     phone = Column(String)
