@@ -1,4 +1,3 @@
-from base64 import b64encode
 from pydantic import UUID4, BaseModel, EmailStr, validator
 from app.models import ServiceTypes
 
@@ -71,6 +70,7 @@ class AccreditationInfoOut(BaseModel):
 
 
 class NewsFullOut(BaseModel):
+    id: UUID4
     title: str
     text: str
     image_id: UUID4 | None
