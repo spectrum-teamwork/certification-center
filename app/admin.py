@@ -261,3 +261,4 @@ class EmailAdmin(ModelAdmin, model=m.EmailConfig):
 
     can_delete = False
     can_export = False
+    can_view_details = False
