@@ -257,6 +257,7 @@ class EmailAdmin(ModelAdmin, model=m.EmailConfig):
     name: ClassVar[str] = "Конфигурация email рассылки"
     name_plural: ClassVar[str] = "Настройки Email"
     column_list = [m.EmailConfig.MAIL_USERNAME, m.EmailConfig.MAIL_SERVER, m.EmailConfig.MAIL_PORT]
+    form_overrides = dict(MAIL_PASSWORD=wtforms.PasswordField)
 
     can_delete = False
     can_export = False
