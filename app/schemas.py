@@ -90,7 +90,7 @@ class NewsFullOut(BaseModel):
 class NewsOut(NewsFullOut):
     @validator('text', pre=True)
     def dump_text(cls, v: str):
-        return ' '.join(v.split(' ')[:14]) + ' ...'
+        return ' '.join(v.split(' ')[:14]) + '...'
 
 
 class OrderIn(BaseModel):
