@@ -1,0 +1,88 @@
+.hero {
+  z-index: 100;
+  margin-top: 187px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @include media-breakpoint-down(md) {
+    margin-top: 42px;
+  }
+
+  &__title {
+    margin: 0;
+    line-height: 76px;
+    @include media-breakpoint-down(md) {
+      font-size: 57px;
+      line-height: 61px;
+    }
+    @include media-breakpoint-down(sm) {
+      font-size: 40px;
+      line-height: 46px;
+    }
+    @include media-breakpoint-down(xs) {
+      font-size: 30px;
+      line-height: 34px;
+    }
+  }
+
+  &__description {
+    margin-top: 40px;
+    font-size: 16px;
+    line-height: 32px;
+    max-width: 100%;
+    @include media-breakpoint-down(md) {
+      margin-top: 20px;
+      word-wrap: normal;
+      white-space: normal;
+      font-size: 14px;
+      line-height: 25px;
+    }
+    @include media-breakpoint-down(sm) {
+      font-size: 12px;
+      line-height: 18px;
+    }
+  }
+
+  &__actions {
+    margin-top: 86px;
+    display: flex;
+    align-items: center;
+    @include media-breakpoint-down(md) {
+      margin-top: 10px;
+      .button {
+        width: 180px;
+        height: 60px;
+        font-size: 13px;
+      }
+      .hero__link {
+        font-size: 13px;
+        margin-left: 22px;
+      }
+    }
+    @include media-breakpoint-down(sm) {
+      margin-top: 10px;
+      .button {
+        width: 120px;
+        height: 41px;
+        font-size: 13px;
+      }
+      .hero__link {
+        font-size: 12px;
+        margin-left: 15px;
+      }
+    }
+  }
+
+  &__link {
+    cursor: pointer;
+    margin-left: 60px;
+    font-size: 17px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--primary-color);
+    transition: color var(--animation-duration) ease;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+}

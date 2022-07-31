@@ -21,3 +21,14 @@ services:
       - .env
     depends_on:
       - database
+
+  certificationcenterfrontend:
+    image: certificationcenterfrontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - certificationcenter

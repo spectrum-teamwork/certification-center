@@ -1,0 +1,25 @@
+.slider-arrows {
+  display: flex;
+
+  &__prev, &__next {
+    $color: var(--text-primary);
+    $color-hover: var(--primary-light-color);
+    $bg-color: transparent;
+
+    border: none;
+    padding: 20px;
+    cursor: pointer;
+    color: $color;
+    background-color: $bg-color;
+    transition: color var(--animation-duration) ease;
+
+    &:focus {
+      background-color: $bg-color;
+    }
+
+    &:hover, &:active {
+      color: $color-hover;
+      background-color: $bg-color;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+.header {
+  padding-top: 38px;
+
+  &_hero {
+    width: 100vw;
+    height: 100vh;
+    min-height: 900px;
+    max-height: 1080px;
+    background: url("/assets/img/hero-image.png") no-repeat center right, linear-gradient(118.21deg, #FFFFFF 20.06%, #F9F9F9 73.75%);
+    background-size: contain;
+    @include media-breakpoint-down(md) {
+      height: auto;
+      padding-bottom: 30px;
+      min-height: auto;
+      background-image: linear-gradient(118.21deg, #FFFFFF 20.06%, #F9F9F9 73.75%);
+    }
+  }
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+
+  .navigation-wrapper {
+    margin-left: auto;
+  }
+}

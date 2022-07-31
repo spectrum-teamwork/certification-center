@@ -1,0 +1,34 @@
+.leave-order {
+  min-height: 650px;
+  padding: 48px 0;
+  overflow: visible;
+  position: relative;
+  background: url('/assets/img/leave-order-bg.png') center/cover no-repeat;
+
+  @include media-breakpoint-down(sm) {
+    min-height: auto;
+  }
+
+  .container {
+    position: relative;
+
+    .leave-order__network {
+      top: -120px;
+      right: 500px;
+      position: absolute;
+      z-index: 100;
+      @include media-breakpoint-down(xxxl) {
+        right: 350px;
+      }
+      @include media-breakpoint-down(xxl) {
+        right: 320px;
+      }
+      @include media-breakpoint-down(xl) {
+        display: none;
+      }
+      @include media-breakpoint-up(xxxl) {
+        right: 500px;
+      }
+    }
+  }
+}

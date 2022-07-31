@@ -1,0 +1,39 @@
+.our-clients {
+  padding: 105px 0 127px;
+  background-color: var(--white);
+  @include media-breakpoint-down(sm) {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  &__heading {
+    z-index: 10;
+  }
+
+  .client {
+    display: flex;
+    box-sizing: border-box;
+    padding: 52px 35px;
+    align-items: center;
+    justify-content: center;
+    background-size: contain;
+    border-radius: 20px;
+    border: 1px solid var(--text-primary);
+    @include media-breakpoint-down(xs) {
+      padding: 30px 19px;
+    }
+
+    &__image {
+      img {
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+
+    &:hover {
+      .client__image {
+        filter: brightness(0) saturate(100%) invert(53%) sepia(87%) saturate(1234%) hue-rotate(349deg) brightness(96%) contrast(95%);
+      }
+    }
+  }
+}

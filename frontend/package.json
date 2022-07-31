@@ -1,0 +1,32 @@
+{
+  "name": "csd",
+  "private": true,
+  "scripts": {
+    "build": "gridsome build",
+    "develop": "gridsome develop",
+    "explore": "gridsome explore"
+  },
+  "dependencies": {
+    "@gridsome/plugin-critical": "^0.2.0",
+    "@vueuse/core": "^8.7.5",
+    "@vueuse/integrations": "^8.7.5",
+    "axios": "^0.27.2",
+    "bootstrap": "^4.6.1",
+    "graphql-request": "^4.3.0",
+    "gridsome": "^0.7.0",
+    "gridsome-source-rest": "^1.0.11",
+    "js-cookie": "^3.0.1",
+    "normalize.css": "^8.0.1",
+    "sass-rem": "^3.0.0",
+    "swiper": "^8.2.6",
+    "universal-cookie": "^4.0.4"
+  },
+  "devDependencies": {
+    "file-loader": "^6.2.0",
+    "http-proxy-middleware": "^2.0.6",
+    "sass": "^1.53.0",
+    "sass-loader": "^10.3.0",
+    "webp-loader": "^0.6.0",
+    "webpack": "^4.46.0"
+  }
+}

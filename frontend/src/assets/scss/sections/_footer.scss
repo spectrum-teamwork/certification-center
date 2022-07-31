@@ -1,0 +1,25 @@
+.footer {
+  color: white;
+  line-height: 25px;
+
+  a {
+    display: inline-block;
+    color: #999999;
+    text-decoration: none;
+  }
+
+  &__requisites {
+    margin-top: 10px;
+    height: 45px;
+    display: flex;
+    width: 100%;
+    padding-bottom: 21px;
+    border-bottom: 1px solid #A9A9A9;
+  }
+
+  &__policies {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+  }
+}

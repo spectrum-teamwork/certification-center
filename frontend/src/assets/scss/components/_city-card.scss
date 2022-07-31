@@ -1,0 +1,51 @@
+@use "sass-rem" as to;
+
+.csd-city-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #2C2C2C;
+  border-radius: 20px;
+  width: 100%;
+  padding: 43px 21px 22px;
+  @include media-breakpoint-down(md) {
+    padding: 20px;
+  }
+
+  &__contact-heading {
+    margin: 0;
+    padding-bottom: 40px;
+    font-size: 28px;
+    @include media-breakpoint-down(sm) {
+      font-size: 20px;
+      padding-bottom: 20px;
+    }
+  }
+
+  &__contact-row {
+    margin: 0;
+    display: flex;
+    padding: 0 0 36px;
+    align-items: center;
+    @include media-breakpoint-down(sm) {
+      padding-bottom: 15px;
+    }
+
+    svg {
+      min-height: 21px;
+      max-height: 21px;
+      min-width: 21px;
+      max-width: 21px;
+    }
+  }
+
+  &__contact-icon {
+    width: 21px;
+    height: 21px;
+    color: var(--primary-color);
+  }
+
+  &__contact-data {
+    margin-left: 24px;
+    text-decoration: none;
+  }
+}

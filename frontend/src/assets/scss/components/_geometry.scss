@@ -1,0 +1,30 @@
+.octagon {
+  position: absolute;
+  width: 297px;
+  height: 347px;
+  z-index: 10;
+  left: -120px;
+  margin-top: -300px;
+  background: url("/assets/img/octagon.svg") no-repeat center/contain;
+}
+
+.triangle {
+  position: absolute;
+  width: 274px;
+  height: 280px;
+  z-index: 10;
+  right: 120px;
+  margin-top: -220px;
+  background: url("/assets/img/triangle.svg") no-repeat center/contain;
+}
+
+.circle {
+  $size: 295px;
+  position: absolute;
+  width: $size;
+  height: $size;
+  z-index: 10;
+  left: -120px;
+  margin-top: -250px;
+  background: url("/assets/img/circle.svg") no-repeat center/contain;
+}

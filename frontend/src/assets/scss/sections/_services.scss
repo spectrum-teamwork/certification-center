@@ -1,0 +1,186 @@
+@use "sass:math";
+
+.services {
+  color: var(--white);
+  padding: 91px 0 140px;
+  background: rgb(239, 127, 26);
+  background: -moz-linear-gradient(28deg, rgba(239, 127, 26, 1) 0%, rgba(246, 177, 14, 1) 100%);
+  background: -webkit-linear-gradient(28deg, rgba(239, 127, 26, 1) 0%, rgba(246, 177, 14, 1) 100%);
+  background: linear-gradient(28deg, rgba(239, 127, 26, 1) 0%, rgba(246, 177, 14, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ef7f1a", endColorstr="#f6b10e", GradientType=1);
+  @include media-breakpoint-down(sm) {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .slider-arrows {
+    .slider-arrows__prev, .slider-arrows__next {
+      color: var(--white);
+
+      &:hover {
+        color: #FFED00;
+      }
+    }
+  }
+
+  &__list {
+    margin-top: 93px;
+    position: relative;
+    user-select: none;
+    @include media-breakpoint-down(md) {
+
+    }
+    @include media-breakpoint-down(xs) {
+      margin-top: 20px;
+    }
+
+    .navigation {
+      &__left, &__right {
+        border: none;
+        background-color: transparent;
+        position: absolute;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 0 30px;
+        cursor: pointer;
+        transition: color var(--animation-duration) ease;
+
+        &:hover {
+          color: #FFED00;
+        }
+      }
+
+      &__left {
+        left: -118px;
+      }
+
+      &__right {
+        right: -118px;
+      }
+    }
+  }
+
+  .service {
+    display: flex;
+    flex: 1;
+    position: relative;
+    align-items: stretch;
+    flex-direction: column;
+    text-align: center;
+    color: var(--white);
+    padding: 57px 27px 27px;
+    border-radius: 20px;
+    border: 1px solid #DFCD6D;
+    transition: all var(--animation-duration) ease;
+    text-decoration: none;
+    @include media-breakpoint-down(sm) {
+      padding: 15px;
+      cursor: pointer;
+    }
+    @include media-breakpoint-down(xs) {
+      padding: 10px;
+    }
+
+    &:hover {
+      background-color: #F5A710;
+      @include media-breakpoint-up(sm) {
+
+      }
+      @include media-breakpoint-up(sm) {
+        transform: scale(1.05);
+      }
+    }
+
+    &__icon {
+      --size: 63px;
+      width: var(--size);
+      height: var(--size);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      border-radius: 15px;
+      left: calc(50% - (var(--size) / 2));
+      top: calc((var(--size) / 2) * -1);
+      background-color: #FFAB2F;
+      padding: 10px;
+      box-sizing: border-box;
+      @include media-breakpoint-down(sm) {
+        --size: 42px;
+        border-radius: 5px;
+      }
+      @include media-breakpoint-down(xs) {
+        --size: 32px;
+        border-radius: 5px;
+      }
+
+      img {
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+
+    &__image-wrapper {
+      min-height: 230px;
+      text-align: center;
+      background: radial-gradient(50% 50% at 50% 50%, rgba(255, 237, 0, 0.5) 0%, rgba(255, 237, 0, 0) 79.79%);
+      @include media-breakpoint-down(sm) {
+        min-height: 180px;
+      }
+      @include media-breakpoint-down(xs) {
+        min-height: 130px;
+      }
+
+      img {
+        max-width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    &__name-wrapper {
+      margin-top: 23px;
+      @include media-breakpoint-down(xs) {
+        margin-top: 20px;
+      }
+    }
+
+    &__name {
+      overflow: hidden;
+      font-size: 22px;
+      line-height: 32px;
+      @include media-breakpoint-down(sm) {
+        font-size: 16px;
+        line-height: 18px;
+      }
+      @include media-breakpoint-down(xs) {
+        font-size: 12px;
+        line-height: 13px;
+      }
+    }
+
+    &__link-wrapper {
+      margin-top: auto;
+    }
+
+    &__link {
+      display: inline-block;
+      color: inherit;
+      padding-top: 15px;
+      font-size: 16px;
+      line-height: 32px;
+      @include media-breakpoint-down(sm) {
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+  }
+}

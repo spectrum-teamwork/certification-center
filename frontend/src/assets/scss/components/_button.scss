@@ -1,0 +1,58 @@
+button, .button {
+  border: none;
+  padding: 27px 73px;
+  font-size: 17px;
+  background-color: var(--secondary-color);
+  color: var(--white);
+  border-radius: 20px;
+  cursor: default;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  transition: all var(--animation-duration) ease;
+
+  &:hover, &:focus, &:active {
+    background-color: var(--primary-color);
+  }
+
+  &_success {
+    background-color: #22cc00;
+
+    &:hover {
+      background-color: #22cc00;
+    }
+  }
+
+  &_error {
+    background-color: #e80000;
+
+    &:hover {
+      background-color: #e80000;
+    }
+  }
+
+  //@include media-breakpoint-down(xs) {
+  //  font-size: 9px;
+  //}
+  @include media-breakpoint-down(md) {
+    font-size: 12px;
+    padding: 16px 36px;
+    border-radius: 10px;
+  }
+}
+
+.button__order {
+  color: var(--text-primary);
+  border-radius: 9999rem;
+  -webkit-transition: background var(--animation-duration) ease;
+  transition: all var(--animation-duration) ease;
+  width: 237px;
+  height: 80px;
+  background: transparent url('/assets/img/order-button-bg.svg') no-repeat center/contain;
+
+  &:hover {
+    color: white;
+    background: var(--primary-color);
+  }
+}

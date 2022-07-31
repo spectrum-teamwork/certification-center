@@ -1,0 +1,146 @@
+.navigation {
+  display: inline-block;
+
+  .menu {
+    $menu: &;
+    display: flex;
+    position: relative;
+
+    &, .submenu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    &__link {
+      text-align: center;
+      display: block;
+      white-space: nowrap;
+      text-decoration: none;
+      padding: 30px 40px 10px;
+      border-top: 3px solid #EFEFEF;
+
+      svg {
+        margin-left: 14px;
+      }
+
+      &_active, &:hover, &:focus {
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+    }
+
+    &__item {
+      position: relative;
+
+      &:hover {
+        .menu__link {
+          color: var(--primary-color);
+          border-color: var(--primary-color);
+        }
+      }
+
+      &:hover {
+        & > .submenu {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+
+    .submenu {
+      z-index: 10;
+      opacity: 0;
+      visibility: hidden;
+      width: max-content;
+      display: flex;
+      position: absolute;
+      flex-direction: column;
+      list-style: none;
+      padding: 15px;
+      margin: 0;
+      left: 0;
+      top: 60px;
+      background: #FFFFFF;
+      border: 1px solid #EFEFEF;
+      border-radius: 10px;
+      transition: opacity var(--animation-duration) ease, visibility 0s;
+
+      &:hover {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      &__link {
+        display: block;
+        text-decoration: none;
+        padding-top: 9px;
+        padding-bottom: 12px;
+        transition: color var(--animation-duration) ease;
+
+        &:hover {
+          color: var(--primary-color);
+        }
+      }
+
+      &__item {
+        white-space: nowrap;
+        text-decoration: none;
+        border-bottom: 1px solid #EFEFEF;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+
+.bm-menu .bm-item-list {
+  .navigation {
+    width: 100%;
+
+    .menu {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      position: static;
+
+      &__link {
+        border-top: none;
+        border-bottom: 3px solid #EFEFEF;
+      }
+
+      &__item {
+        position: relative;
+
+        &:hover {
+          .menu__link {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+          }
+        }
+      }
+
+      .submenu {
+        overflow: hidden;
+        height: 0;
+        opacity: 1;
+        display: none;
+        visibility: visible;
+        position: static;
+        width: 100%;
+
+        &__item {
+          white-space: normal;
+        }
+
+        &_visible {
+          height: auto;
+          overflow: visible;
+          display: flex;
+        }
+      }
+    }
+  }
+}

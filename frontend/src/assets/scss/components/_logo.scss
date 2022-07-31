@@ -1,0 +1,12 @@
+.logo {
+  display: flex;
+
+  & > a {
+    display: flex;
+  }
+
+  img {
+    object-fit: contain;
+    width: 100%;
+  }
+}

@@ -1,0 +1,23 @@
+@use "sass-rem" as to;
+
+input, select, textarea {
+  border: none;
+  padding: 16px 0;
+  border-bottom: 1px solid #A9A9A9;
+  width: 100%;
+  &:focus {
+    outline: none;
+  }
+  @include media-breakpoint-down(xs) {
+    padding: 10px 0;
+  }
+}
+
+select {
+  -webkit-appearance: none;
+  background: url("data:image/svg+xml,%3Csvg width='9' height='8' viewBox='0 0 9 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.5 8L6.99382e-07 -7.86805e-07L9 0L4.5 8Z' fill='%232C2C2C'/%3E%3C/svg%3E%0A") no-repeat right center;
+}
+
+textarea {
+  min-height: 80px;
+}

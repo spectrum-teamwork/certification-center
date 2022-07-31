@@ -1,0 +1,46 @@
+.modal {
+  top: 0;
+  left: 0;
+  //opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  z-index: 2000;
+  position: fixed;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, .4);
+  transition: all var(--animation-duration) ease;
+
+  &_visible {
+    opacity: 1;
+  }
+
+  .button_modal-close {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    height: max-content;
+
+    svg {
+      @include media-breakpoint-down(sm) {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity var(--animation-duration);
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
