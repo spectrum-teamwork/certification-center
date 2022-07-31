@@ -1,13 +1,10 @@
 import enum
 from datetime import datetime
 from uuid import uuid4
-from pydantic import UUID4
 
 from sqlalchemy import TIMESTAMP, Boolean, Column, Enum, Float, Integer, String, func, LargeBinary
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base
-from app.database import engine
-
 Base = declarative_base()
 
 
