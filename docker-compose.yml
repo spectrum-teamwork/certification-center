@@ -22,12 +22,6 @@ services:
     depends_on:
       - database
 
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
   certificationcenterfrontend:
     image: certificationcenterfrontend
     build:
@@ -38,4 +32,4 @@ services:
       - 443:443
     depends_on:
       certificationcenter:
-        condition: service_healthy
+        condition: service_completed_successfully
