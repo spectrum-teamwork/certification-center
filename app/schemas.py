@@ -1,4 +1,3 @@
-from base64 import b64encode
 from pydantic import UUID4, BaseModel, EmailStr, validator
 from app.models import ServiceTypes
 
@@ -79,6 +78,7 @@ class AccreditationInfoOut(BaseModel):
 
 
 class NewsFullOut(BaseModel):
+    id: UUID4
     title: str
     text: str
     image_id: UUID4 | None
@@ -90,7 +90,7 @@ class NewsFullOut(BaseModel):
 class NewsOut(NewsFullOut):
     @validator('text', pre=True)
     def dump_text(cls, v: str):
-        return ' '.join(v.split(' ')[:14]) + ' ...'
+        return ' '.join(v.split(' ')[:14]) + '...'
 
 
 class OrderIn(BaseModel):
