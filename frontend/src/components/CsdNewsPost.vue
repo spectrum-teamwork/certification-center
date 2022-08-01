@@ -1,45 +1,22 @@
 <template>
   <section class="service-post">
-    <csd-post-header heading="Приняты изменения в ТР ТС 004/2011 и 020/2011"/>
+    <csd-post-header :heading="title"/>
     <div class="container">
       <div class="row">
         <div class="col-12">
           <g-image quality="80"
             class="d-xl-none mb-5"
-            :src="'/assets/img/news/1.png'"
+            :src="imageById(imageId)"
             style="width: 100%; object-fit: contain; border-radius: 20px; overflow: hidden;"
           />
         </div>
         <div class="col-12 col-xl-7 news-post__wrapper">
-          <div class="news-post__content">
-            <p>
-              16 ноября на правовом портале ЕЭК стартовали публичные обсуждения двух проектов Решений Совета ЕЭК,
-              вносящих
-              изменения в техрегламенты ТР ТС 004 / 2011 и ТР ТС 020 / 2011. Рассказываем о самых интересных из них.
-              Несмотря на то, что это два разных проекта, оба они идентичны, поэтому и расскажем мы сразу про оба.
-              Теперь в этих техрегламентах будут использоваться не только определения из них самих же, но также
-              определения из Договора о ЕАЭС и Решения Совета ЕЭК №44, о чём гласит новый абзац статьи 2:
-            </p>
-            <p>
-              Для целей применения настоящего технического регламента используются понятия, установленные Протоколом о
-              техническом регулировании в рамках Евразийского экономического союза (приложение № 9 к Договору о
-              Евразийском экономическом союзе от 29 мая 2014 года) (далее — Союз), типовыми схемами оценки соответствия,
-              утверждёнными Решением Совета Евразийской экономической комиссии от №44 от 18 апреля 2018 года (далее
-              соответственно — типовые схемы, Комиссия), а также понятия, которые означают следующее:
-            </p>
-            <p>
-              Раньше в техрегламентах использовались только "классические" схемы сертификации 1с, 3с, 4с, но теперь к
-              ним
-              добавится ещё и 9с. Данная схема интересна тем, что позволяет подтвердить соответствие единичного изделия
-              без его испытаний, только на основе технической документации.
-            </p>
-
-          </div>
+          <div class="news-post__content" v-html="content"/>
         </div>
         <div class="col-xl-5">
           <g-image quality="80"
             class="d-none d-xl-flex"
-            :src="'/assets/img/news/1.png'"
+            :src="imageById(imageId)"
             style="width: 100%; object-fit: contain; border-radius: 20px; overflow: hidden;"
           />
         </div>
@@ -50,9 +27,25 @@
 
 <script>
 import CsdPostHeader from './CsdPostHeader'
+import imageById from '../mixins/imageById'
 
 export default {
   name: 'CsdServicePost',
-  components: { CsdPostHeader }
+  components: { CsdPostHeader },
+  mixins: [imageById],
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    content: {
+      type: String,
+      required: true
+    },
+    imageId: {
+      type: String,
+      required: true
+    },
+  }
 }
 </script>

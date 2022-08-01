@@ -17,20 +17,20 @@
       </div>
       <div class="row">
         <div class="col-12 col-lg-3 mt-4 mt-lg-0 footer__policies">
-          <a href="#">Политика конфиденциальности</a>
-          <a href="#">Пользовательское соглашение</a>
+          <g-link to="/privacy-policy">Политика конфиденциальности</g-link>
+          <g-link to="/user-agreement">Пользовательское соглашение</g-link>
         </div>
         <div class="col-12 mt-4 mt-lg-0 col-lg-5 offset-lg-1 d-flex flex-column">
-          Москва:
-          <a :href="getTelHref('8 (800) 600-17-44')">8 (800) 600-17-44</a>
-          ул. Проспект Мира, дом 39, строение 2, офис 304 БЦ Олимпик Плаза II
-          <a href="mailto:krd@csd.expert">krd@csd.expert</a>
+          {{ $static.allAddresses.edges[0].node.city }}:
+          <a :href="getTelHref($static.allAddresses.edges[0].node.phone)">{{$static.allAddresses.edges[0].node.phone}}</a>
+          {{ $static.allAddresses.edges[0].node.address }}
+          <a href="mailto:krd@csd.expert">{{ $static.allAddresses.edges[0].node.email }}</a>
         </div>
         <div class="col-12 mt-4 mt-lg-0 col-lg-3 d-flex flex-column">
-          Краснодар:
-          <a :href="getTelHref('8 (800) 600-17-44')" class="text-white">8 (800) 600-17-44</a>
-          ул. Адмирала Крузенштерна, дом 6
-          <a href="mailto:krd@csd.expert" class="text-white">krd@csd.expert</a>
+          {{ $static.allAddresses.edges[1].node.city }}:
+          <a :href="getTelHref($static.allAddresses.edges[1].node.phone)" class="text-white">{{ $static.allAddresses.edges[1].node.phone }}</a>
+          {{ $static.allAddresses.edges[1].node.address }}
+          <a href="mailto:krd@csd.expert" class="text-white">{{ $static.allAddresses.edges[1].node.email }}</a>
         </div>
       </div>
     </div>
@@ -42,6 +42,17 @@ query {
     name
     inn
     ogrn
+  }
+  allAddresses {
+    edges {
+      node {
+        id
+        city
+        address
+        phone
+        email
+      }
+    }
   }
 }
 </static-query>

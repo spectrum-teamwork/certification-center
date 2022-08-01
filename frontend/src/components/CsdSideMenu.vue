@@ -131,7 +131,8 @@ export default {
         element &&
         this.hasClass(target, 'bm-menu') &&
         this.isSideBarOpen &&
-        this.closeOnNavigation
+        this.closeOnNavigation &&
+        target?.getElementsByTagName('svg').length === 0
       ) {
         this.closeMenu()
       }

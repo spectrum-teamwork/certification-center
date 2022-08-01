@@ -15,7 +15,7 @@
           <csd-navigation class="d-none ml-auto d-xxl-flex"/>
           <div class="ml-auto d-xxl-none">
             <client-only>
-              <csd-side-menu width="100%">
+              <csd-side-menu width="100%" close-on-navigation>
                 <csd-navigation/>
               </csd-side-menu>
             </client-only>

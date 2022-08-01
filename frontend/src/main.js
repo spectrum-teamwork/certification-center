@@ -21,4 +21,25 @@ export default function (Vue, { router, head, isClient }) {
     href: 'https://fonts.gstatic.com',
     crossOrigin: true
   })
+  head.link.push({
+    rel: 'apple-touch-icon',
+    href: '/apple-touch-icon.png',
+    sizes: '180x180'
+  })
+  head.link.push({
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '32x32',
+    href: '/favicon-32x32.png'
+  })
+  head.link.push({
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '16x16',
+    href: '/favicon-16x16.png'
+  })
+  head.link.push({
+    rel: 'manifest',
+    href: '/site.webmanifest'
+  })
 }

@@ -37,7 +37,6 @@
         <div class="row">
           <div class="col-12">
             <textarea
-              required
               name="comment"
               v-model="form.comment"
               placeholder="Ваш вопрос"/>

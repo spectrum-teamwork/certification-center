@@ -28,7 +28,7 @@
           <div class="service-post__content" v-html="content"/>
           <div class="requirements d-none d-lg-flex">
             <div class="requirements__cert">
-              <g-image quality="80" :src="certImage" alt="Пример сертификата/протокола испытаний"/>
+              <g-image quality="80" id="image" :src="certImage" alt="Пример сертификата/протокола испытаний"/>
             </div>
             <div class="requirements__content">
               <h3
@@ -55,8 +55,10 @@
 </template>
 
 <script>
+import 'viewerjs/dist/viewer.css'
 import CsdPostHeader from './CsdPostHeader'
 import CsdPriceCalcForm from './CsdPriceCalcForm'
+import Viewer from 'viewerjs'
 
 export default {
   name: 'CsdServicePost',
@@ -86,6 +88,27 @@ export default {
       type: String,
       required: true
     }
+  },
+  data() {
+    return {
+      viewer: undefined
+    }
+  },
+  mounted() {
+    this.viewer = new Viewer(document.getElementById('image'), {
+      viewed() {
+        this.viewer.zoomTo(1)
+      }
+    })
   }
 }
 </script>
+<style lang="scss">
+.viewer-toolbar {
+  ul {
+    li {
+      display: flex;
+    }
+  }
+}
+</style>

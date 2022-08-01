@@ -66,7 +66,6 @@
         <div class="row">
           <div class="col-12">
             <textarea
-              required
               name="comment"
               v-model="form.comment"
               placeholder="Ваш комментарий"/>
@@ -134,7 +133,7 @@ export default {
       },
       form: {
         contact_id: '',
-        service_id: '',
+        service_id: '7334d757-3fae-4b38-8e54-892007162adf',
         contact_name: '',
         phone: '',
         email: '',

@@ -76,6 +76,7 @@
     border: 1px solid #DFCD6D;
     transition: all var(--animation-duration) ease;
     text-decoration: none;
+    max-height: 400px;
     @include media-breakpoint-down(sm) {
       padding: 15px;
       cursor: pointer;

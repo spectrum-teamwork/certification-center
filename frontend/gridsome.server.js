@@ -7,11 +7,12 @@
 const axios = require('axios')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
-const server = `http://yarlikvid.ru:8000/api/v1`
+const server = `${process.env.GRIDSOME_API_URL}`
 const urls = {
   news: `${server}/news`,
   clients: `${server}/clients`,
   regions: `${server}/main/contacts`,
+  hero: `${server}/main/title`,
   services: `${server}/services`,
   accreditationInfo: `${server}/accreditation/info`,
   accreditationCertificates: `${server}/accreditation/certificates`
@@ -45,33 +46,16 @@ module.exports = async function (api) {
     _certificates.data.forEach((cert) => certificates.addNode(cert))
 
     const news = actions.addCollection({ typeName: 'News' })
-    const _news = [
-      {
-        id: '0',
-        image: '/assets/img/news/1.png',
-        heading: 'Приняты изменения в ТР ТС 004/2011 и 020/2011',
-        highlight: 'На заседании Совета ЕЭК 10 июня приняты решения о внесении изменений в технические регламент'
-      },
-      {
-        id: '1',
-        image: '/assets/img/news/2.png',
-        heading: 'О временных дополнениях в типовые схемы оценки',
-        highlight: 'Коллегия ЕЭК приняла Распоряжение №67 от 26 апреля 2022 года, которым утверждается'
-      },
-      {
-        id: '2',
-        image: '/assets/img/news/3.png',
-        heading: 'Проект изменений №2 в ТР ТС 019/2011',
-        highlight: 'На Правовом портале Евразийского экономического союза размещён для общественного обсуждения проект'
-      },
-      {
-        id: '3',
-        image: '/assets/img/news/4.png',
-        heading: 'Обсуждение проекта изменений в ТР ТС 019/2011',
-        highlight: 'С 1 мая 2022 года начнется процедура общественного обсуждения проекта изменений в ТР ТС 019/2011'
-      }
-    ]
-    _news.forEach((event) => news.addNode(event))
+    const _news = await axios.get(urls.news)
+    for (const datum of _news.data) {
+      const fullNews = await axios.get(`${urls.news}/${datum.id}`)
+      const result = { ...fullNews.data, short_text: datum.text }
+      news.addNode(result)
+    }
+
+    const hero = actions.addCollection({ typeName: 'Hero' })
+    const _hero = await axios.get(urls.hero)
+    hero.addNode({ id: 1, ..._hero.data })
 
     const _requisites = actions.addCollection({ typeName: 'Requisites' })
     _requisites.addNode({
@@ -102,6 +86,27 @@ module.exports = async function (api) {
         component: './src/pages/services/[id].vue',
         context: {
           serviceId: node.id
+        }
+      })
+    }
+  })
+
+  api.createPages(async ({ graphql, createPage }) => {
+    const { data } = await graphql(`{
+        allNews {
+          edges {
+            node {
+              id  
+            }
+          }
+        }
+      }`)
+    for (const { node } of data.allNews.edges) {
+      createPage({
+        path: `/news/${node.id}`,
+        component: './src/pages/news/[id].vue',
+        context: {
+          newsId: node.id
         }
       })
     }

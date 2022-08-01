@@ -21,16 +21,16 @@
                   <div class="post">
                     <div
                       class="post__image"
-                      :style="{backgroundImage: `url('${node.image}')`}"
+                      :style="{backgroundImage: `url('${imageById(node.image_id)}')`}"
                     />
                     <div class="post__text-wrapper">
                       <div class="post__heading">
-                        {{ node.heading }}
+                        {{ node.title }}
                       </div>
                       <p class="post__highlight">
-                        {{ node.highlight }}
+                        {{ node.short_text }}
                       </p>
-                      <g-link to="/news" class="post__link">Подробнее</g-link>
+                      <g-link :to="`/news/${node.id}`" class="post__link">Подробнее</g-link>
                     </div>
                   </div>
                 </div>
@@ -57,9 +57,9 @@ query {
     edges {
       node {
         id
-        image
-        heading
-        highlight
+        title
+        image_id
+        short_text
       }
     }
   }
@@ -72,10 +72,11 @@ import IconChevronLeft from './icons/IconChevronLeft.vue'
 import IconChevronRight from './icons/IconChevronRight.vue'
 import CsdSliderArrows from './CsdSliderArrows'
 import windowSizeMixin from '../mixins/windowSizeMixin'
+import imageById from '../mixins/imageById'
 
 export default {
   name: 'CsdSectionNews',
-  mixins: [windowSizeMixin],
+  mixins: [windowSizeMixin, imageById],
   components: { CsdSliderArrows, IconChevronRight, IconChevronLeft },
   data() {
     return {

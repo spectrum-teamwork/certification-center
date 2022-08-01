@@ -19,7 +19,8 @@
     "normalize.css": "^8.0.1",
     "sass-rem": "^3.0.0",
     "swiper": "^8.2.6",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "viewerjs": "^1.10.5"
   },
   "devDependencies": {
     "file-loader": "^6.2.0",
