@@ -30,8 +30,8 @@ services:
     ports:
       - 80:80
       - 443:443
-    environment:
-      - GRIDSOME_API_URL=certificationcenter
+    env_file:
+      - .env
     depends_on:
       certificationcenter:
         condition: service_completed_successfully
