@@ -1,3 +1,4 @@
+from email.policy import default
 import enum
 from datetime import datetime
 from uuid import uuid4
@@ -124,12 +125,12 @@ class Order(IdMixin, CreateUpdateMixin):
 class EmailConfig(IdMixin):
     __tablename__ = 'email_config'
 
-    MAIL_USERNAME = Column(String, nullable=False)
-    MAIL_PASSWORD = Column(String, nullable=False)
-    MAIL_FROM = Column(String, nullable=False)
+    MAIL_USERNAME = Column(String, nullable=False, default='username')
+    MAIL_PASSWORD = Column(String, nullable=False, default='password')
+    MAIL_FROM = Column(String, nullable=False, default='test@test.com')
     MAIL_PORT = Column(Integer, nullable=False, default=587)
-    MAIL_SERVER = Column(String, nullable=False)
-    MAIL_FROM_NAME = Column(String, nullable=False)
+    MAIL_SERVER = Column(String, nullable=False, default='smpt.test.com')
+    MAIL_FROM_NAME = Column(String, nullable=False, default='test@test.com')
     MAIL_TLS = Column(Boolean, nullable=False, default=False)
     MAIL_SSL = Column(Boolean, nullable=False, default=False)
     USE_CREDENTIALS = Column(Boolean, nullable=False, default=False)

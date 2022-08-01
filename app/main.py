@@ -38,3 +38,9 @@ async def startup_event():
         if dat is None:
             db.add(m.AccreditationInfo(title='Заголовок', text='Текст'))
             await db.commit()
+
+        stmt = await db.execute(select(m.EmailConfig))
+        dat = stmt.scalar_one_or_none()
+        if dat is None:
+            db.add(m.EmailConfig())
+            await db.commit()
