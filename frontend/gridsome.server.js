@@ -7,7 +7,7 @@
 const axios = require('axios')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
-const server = `http://certificationcenter:8000`
+const server = `http://yarlikvid.ru:8000`
 const urls = {
   news: `${server}/news`,
   clients: `${server}/clients`,
