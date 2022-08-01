@@ -20,18 +20,26 @@
           <g-link to="/privacy-policy">Политика конфиденциальности</g-link>
           <g-link to="/user-agreement">Пользовательское соглашение</g-link>
         </div>
-        <div class="col-12 mt-4 mt-lg-0 col-lg-5 offset-lg-1 d-flex flex-column">
-          {{ $static.allAddresses.edges[0].node.city }}:
-          <a :href="getTelHref($static.allAddresses.edges[0].node.phone)">{{$static.allAddresses.edges[0].node.phone}}</a>
-          {{ $static.allAddresses.edges[0].node.address }}
-          <a href="mailto:krd@csd.expert">{{ $static.allAddresses.edges[0].node.email }}</a>
-        </div>
-        <div class="col-12 mt-4 mt-lg-0 col-lg-3 d-flex flex-column">
-          {{ $static.allAddresses.edges[1].node.city }}:
-          <a :href="getTelHref($static.allAddresses.edges[1].node.phone)" class="text-white">{{ $static.allAddresses.edges[1].node.phone }}</a>
-          {{ $static.allAddresses.edges[1].node.address }}
-          <a href="mailto:krd@csd.expert" class="text-white">{{ $static.allAddresses.edges[1].node.email }}</a>
-        </div>
+        <template v-if="$static.allAddresses.edges.length >= 1">
+          <div class="col-12 mt-4 mt-lg-0 col-lg-5 offset-lg-1 d-flex flex-column">
+            {{ $static.allAddresses.edges[0].node.city }}:
+            <a
+              :href="getTelHref($static.allAddresses.edges[0].node.phone)">{{
+                $static.allAddresses.edges[0].node.phone
+              }}</a>
+            {{ $static.allAddresses.edges[0].node.address }}
+            <a href="mailto:krd@csd.expert">{{ $static.allAddresses.edges[0].node.email }}</a>
+          </div>
+        </template>
+        <template v-if="$static.allAddresses.edges.length >= 2">
+          <div class="col-12 mt-4 mt-lg-0 col-lg-3 d-flex flex-column">
+            {{ $static.allAddresses.edges[1].node.city }}:
+            <a :href="getTelHref($static.allAddresses.edges[1].node.phone)"
+               class="text-white">{{ $static.allAddresses.edges[1].node.phone }}</a>
+            {{ $static.allAddresses.edges[1].node.address }}
+            <a href="mailto:krd@csd.expert" class="text-white">{{ $static.allAddresses.edges[1].node.email }}</a>
+          </div>
+        </template>
       </div>
     </div>
   </footer>

@@ -7,7 +7,7 @@
 const axios = require('axios')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
-const server = `http://yarlikvid.ru:8000/api/v1`
+const server = `http://172.27.0.3:8000/api/v1`
 const urls = {
   news: `${server}/news`,
   clients: `${server}/clients`,
@@ -21,8 +21,7 @@ const urls = {
 module.exports = async function (api) {
   api.configureServer(app => {
     app.use(createProxyMiddleware('/api/v1', {
-      // if you have a .env file, set this variable to something like http://localhost:1337 (I used Strapi)
-      target: 'http://yarlikvid.ru:8000',
+      target: 'http://172.27.0.3:8000',
       changeOrigin: true
     }))
   })

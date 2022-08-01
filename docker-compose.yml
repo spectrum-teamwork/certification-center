@@ -17,6 +17,7 @@ services:
     command: bash -c "alembic upgrade head && gunicorn app.main:app --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker"
     ports:
       - 8000:8000
+      - 8080:8080
     env_file:
       - .env
     depends_on:
