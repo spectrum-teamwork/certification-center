@@ -14,10 +14,9 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: bash -c "alembic upgrade head && gunicorn app.main:app --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker"
+    command: bash -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --forwarded-allow-ips='*' --proxy-headers"
     ports:
       - 8000:8000
-      - 8080:8080
     env_file:
       - .env
     depends_on:
@@ -30,4 +29,3 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 80:80
-      - 443:443
