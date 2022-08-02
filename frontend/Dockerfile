@@ -15,6 +15,8 @@ RUN npm install
 
 ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
 
+ENV NODE_TLS_REJECT_UNAUTHORIZED=0
+
 COPY . ./
 RUN npm run build
 
