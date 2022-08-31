@@ -44,6 +44,3 @@ services:
       - static-content:/app
     env_file:
       - .env
-
-volumes:
-  static-content:
